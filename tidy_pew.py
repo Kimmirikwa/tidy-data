@@ -20,3 +20,6 @@ molten_pew_df = pd.melt(pew_df, id_vars=['religion'], var_name='income', value_n
 
 print("The columns of the molten dataset", molten_pew_df.columns)
 
+# creating a new file for this melted data
+molten_pew_df.to_csv('results/molten_pew.csv', index=False)
+
