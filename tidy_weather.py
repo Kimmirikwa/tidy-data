@@ -1,5 +1,13 @@
 import pandas as pd
 
+def extract_year(row):
+	year = str(row['year'])
+	month = str(row['month'])
+	month = '0' + month if len(month) == 1 else month  # handle months less than October
+	day = row['day'][1:]  # get rid of leading 'd'
+
+	return '-'.join([year, month, day])
+
 weather_df = pd.read_csv('data/weather.csv')
 
 # 'id', 'year', 'month', 'element', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9', 'd10', 'd11', 'd12', 'd13', 
@@ -10,3 +18,7 @@ print("The original columns", weather_df.columns.tolist())
 
 molten_weather_df = pd.melt(weather_df, id_vars=['id', 'year', 'month', 'element'], var_name='day')
 print("The molten columns", molten_weather_df.columns.tolist())  # 'id', 'year', 'month', 'element', 'day', 'value'
+
+# next we extract 'date' by combining 'year', 'month' and 'day'
+molten_weather_df['date'] = molten_weather_df.apply(lambda row: extract_year(row), axis=1)
+molten_weather_df.drop(['year', 'month', 'day'], axis=1, inplace=True)
