@@ -38,3 +38,7 @@ molten_weather_df[['tmax', 'tmin']] = molten_weather_df.apply(lambda row: get_ma
 # drop redundant columns
 molten_weather_df.drop(['year', 'month', 'day', 'element', 'value'], axis=1, inplace=True)
 
+# unfortunately we have duplicate entries for all observations.
+# we therefore retain only one observation per day
+molten_weather_df.drop_duplicates('date', keep='first', inplace=True)
+
