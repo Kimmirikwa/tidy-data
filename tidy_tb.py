@@ -1,5 +1,9 @@
 import pandas as pd
 
+def extract_sex(row):
+	# sex if either 'm' or 'f' and is always the 7th value of 'sex-age'
+	return row['sex-age'][7]
+
 tb_df = pd.read_csv('data/tb.csv')
 
 # the following are the columns of the data
@@ -13,6 +17,11 @@ print("The original columns", tb_df.columns)
 
 # we will first melt this data to convert all other columns except 'iso2', 'year', and 'new_sp' to 2 columns
 # next will extract sex and age from the created variable column to and add the values to respective columns
+
+# melting the data
 molten_tb_df = pd.melt(tb_df, id_vars=['iso2', 'year', 'new_sp'], var_name='sex-age', value_name='count')
 # The new columns are 'iso2', 'year', 'new_sp', 'age-sex', 'count'
 print("The columns for molten data", molten_tb_df.columns)
+
+# finally we extract sex and age from 'sex-age'
+molten_tb_df['sex'] = molten_tb_df.apply(lambda row: extract_sex(row), axis=1)
