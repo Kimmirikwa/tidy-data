@@ -22,7 +22,7 @@ tb_df = pd.read_csv('data/tb.csv')
 # 'new_sp_f014', 'new_sp_f1524', 'new_sp_f2534', 'new_sp_f3544',
 # 'new_sp_f4554', 'new_sp_f5564', 'new_sp_f65', 'new_sp_fu'
 # m -> male, f -> female, 514 -> 5 - 14
-print("The original columns", tb_df.columns)
+print("The original columns", tb_df.columns.tolist())
 
 # we will first melt this data to convert all other columns except 'iso2', 'year', and 'new_sp' to 2 columns
 # next will extract sex and age from the created variable column to and add the values to respective columns
@@ -30,7 +30,7 @@ print("The original columns", tb_df.columns)
 # melting the data
 molten_tb_df = pd.melt(tb_df, id_vars=['iso2', 'year', 'new_sp'], var_name='sex-age', value_name='count')
 # The new columns are 'iso2', 'year', 'new_sp', 'age-sex', 'count'
-print("The columns for molten data", molten_tb_df.columns)
+print("The columns for molten data", molten_tb_df.columns.tolist())
 
 # sorting the data
 molten_tb_df.sort_values(by=['iso2', 'sex-age', 'year'], inplace=True)
@@ -38,3 +38,8 @@ molten_tb_df.sort_values(by=['iso2', 'sex-age', 'year'], inplace=True)
 # finally we extract sex and age from 'sex-age'
 molten_tb_df['sex'] = molten_tb_df.apply(lambda row: extract_sex(row), axis=1)
 molten_tb_df['age'] = molten_tb_df.apply(lambda row: extract_age(row), axis=1)
+
+# drop 'sex-age' and change the order of columns
+molten_tb_df = molten_tb_df[['iso2', 'year', 'new_sp', 'sex', 'age', 'count']]
+print("The final columns", molten_tb_df.columns.tolist())
+
