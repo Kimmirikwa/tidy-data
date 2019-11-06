@@ -4,6 +4,15 @@ def extract_sex(row):
 	# sex if either 'm' or 'f' and is always the 7th value of 'sex-age'
 	return row['sex-age'][7]
 
+def extract_age(row):
+	# age is found from 8th value of 'sex-age' onwards
+	age = row['sex-age'][8:]
+	if not age.isdigit():
+		return age
+	hiphen_position = len(age) // 2
+	age = '-'.join([age[:hiphen_position], age[hiphen_position:]])
+	return age
+
 tb_df = pd.read_csv('data/tb.csv')
 
 # the following are the columns of the data
@@ -25,3 +34,4 @@ print("The columns for molten data", molten_tb_df.columns)
 
 # finally we extract sex and age from 'sex-age'
 molten_tb_df['sex'] = molten_tb_df.apply(lambda row: extract_sex(row), axis=1)
+molten_tb_df['age'] = molten_tb_df.apply(lambda row: extract_age(row), axis=1)
