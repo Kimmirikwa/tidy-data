@@ -43,3 +43,5 @@ molten_tb_df['age'] = molten_tb_df.apply(lambda row: extract_age(row), axis=1)
 molten_tb_df = molten_tb_df[['iso2', 'year', 'new_sp', 'sex', 'age', 'count']]
 print("The final columns", molten_tb_df.columns.tolist())
 
+# create a file of the tidy data
+molten_tb_df.to_csv('results/tidy_tb.csv', index=False)
