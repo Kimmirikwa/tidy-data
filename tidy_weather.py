@@ -8,6 +8,16 @@ def extract_year(row):
 
 	return '-'.join([year, month, day])
 
+def get_max_min(dataset, row):
+	date = row['date']
+	element = row['element']
+	value = row['value']
+	tmax_item = dataset.loc[(dataset['date'] == date) & (dataset['element'] == 'tmax')].iloc[0]
+	tmin_item = dataset.loc[(dataset['date'] == date) & (dataset['element'] == 'tmin')].iloc[0]
+	tmax = tmax_item['value']
+	tmin = tmin_item['value']
+	return pd.Series([tmax, tmin])
+
 weather_df = pd.read_csv('data/weather.csv')
 
 # 'id', 'year', 'month', 'element', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9', 'd10', 'd11', 'd12', 'd13', 
@@ -21,4 +31,10 @@ print("The molten columns", molten_weather_df.columns.tolist())  # 'id', 'year',
 
 # next we extract 'date' by combining 'year', 'month' and 'day'
 molten_weather_df['date'] = molten_weather_df.apply(lambda row: extract_year(row), axis=1)
-molten_weather_df.drop(['year', 'month', 'day'], axis=1, inplace=True)
+
+# create 'tmax' and 'tmin'
+molten_weather_df[['tmax', 'tmin']] = molten_weather_df.apply(lambda row: get_max_min(molten_weather_df, row), axis=1)
+
+# drop redundant columns
+molten_weather_df.drop(['year', 'month', 'day', 'element', 'value'], axis=1, inplace=True)
+
