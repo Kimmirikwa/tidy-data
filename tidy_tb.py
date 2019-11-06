@@ -7,7 +7,7 @@ def extract_sex(row):
 def extract_age(row):
 	# age is found from 8th value of 'sex-age' onwards
 	age = row['sex-age'][8:]
-	if not age.isdigit():
+	if not age.isdigit():  # for 'u' which is undefined
 		return age
 	hiphen_position = len(age) // 2
 	age = '-'.join([age[:hiphen_position], age[hiphen_position:]])
@@ -31,6 +31,9 @@ print("The original columns", tb_df.columns)
 molten_tb_df = pd.melt(tb_df, id_vars=['iso2', 'year', 'new_sp'], var_name='sex-age', value_name='count')
 # The new columns are 'iso2', 'year', 'new_sp', 'age-sex', 'count'
 print("The columns for molten data", molten_tb_df.columns)
+
+# sorting the data
+molten_tb_df.sort_values(by=['iso2', 'sex-age', 'year'], inplace=True)
 
 # finally we extract sex and age from 'sex-age'
 molten_tb_df['sex'] = molten_tb_df.apply(lambda row: extract_sex(row), axis=1)
