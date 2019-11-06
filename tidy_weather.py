@@ -45,3 +45,6 @@ molten_weather_df.drop_duplicates('date', keep='first', inplace=True)
 
 # sort the dataset by 'date'
 molten_weather_df.sort_values(by=['date'], inplace=True)
+
+# create a file for the data
+molten_weather_df.to_csv('results/tidy_weather.csv', index=False)
