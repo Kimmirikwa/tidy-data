@@ -5,6 +5,7 @@ def extract_year(row):
 	month = str(row['month'])
 	month = '0' + month if len(month) == 1 else month  # handle months less than October
 	day = row['day'][1:]  # get rid of leading 'd'
+	day = '0' + day if len(day) == 1 else day
 
 	return '-'.join([year, month, day])
 
@@ -42,3 +43,5 @@ molten_weather_df.drop(['year', 'month', 'day', 'element', 'value'], axis=1, inp
 # we therefore retain only one observation per day
 molten_weather_df.drop_duplicates('date', keep='first', inplace=True)
 
+# sort the dataset by 'date'
+molten_weather_df.sort_values(by=['date'], inplace=True)
