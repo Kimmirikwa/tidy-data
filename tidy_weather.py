@@ -7,3 +7,6 @@ weather_df = pd.read_csv('data/weather.csv')
 # we will need to melt this dataset. We will retain 'id', 'year', 'month' and 'element'.
 # The rest of the columns will be converted to 2 columns i.e 'day' and 'value' 
 print("The original columns", weather_df.columns.tolist())
+
+molten_weather_df = pd.melt(weather_df, id_vars=['id', 'year', 'month', 'element'], var_name='day')
+print("The molten columns", molten_weather_df.columns.tolist())  # 'id', 'year', 'month', 'element', 'day', 'value'
