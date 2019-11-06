@@ -31,3 +31,27 @@ When this data is made by [melting](https://pandas.pydata.org/pandas-docs/stable
 | Agnostic  | $20-30k | 60        | 
 | Atheist   | $20-30k | 37        | 
 | Buddhist  | $20-30k | 30        |
+
+* Multiple variables stored in one column <br/>
+The following dataset has this issue
+
+| iso2  | year | new_sp | new_sp_m04 | new_sp_m514 | new_sp_m014 | new_sp_f014
+| --------- | ----- | ------- | ------- | ------- | ------- | ------- |
+| AD  | 1989    |      |       |       |||
+| AD   | 1990    |       |       |        |||
+| AD  | 1991    |       |       |       |||
+
+
+The table above show just a few rows and columns of the dataset. The columns ```new_sp_m04```, ```new_sp_m514```, ```new_sp_m014``` and the rest of the columns chown here have store more than one variable i.e ```new_sp```, ```sex``` and ```age```. For example, ```new_sp_m04``` has ```sex``` as ```m``` for male, ```04``` which is ages ```0-4```. At the moment I am not sure what ```new_sp``` stands for. Therefore I will only extract ```sex``` and ```age``` from relevant columns.
+
+I start by melting the dataset to have ```iso2```, ```year```, ```new_sp```, ```sex-age```(with the rest of the columns as values) and ```count```(with the initial values of the converted column values)
+
+I then extract ```sex``` and ```age``` values and I add them to the relevant columns. The code for this is in ```tidy_tb.py```. The final tidy file is in ```results/tidy_tb.csv```.
+Below is part of the tidy data(for the above part of the initial of the initial table)
+
+| iso2  | year | new_sp | sex | age | count |
+| --------- | ----- | ------- | ------- | ------- | ------- |
+| AD  | 1989    |      |    m   |    0-4   ||
+| AD   | 1990    |       |  m     |    5-14    ||
+| AD  | 1991    |       |    m   |     0-14  ||
+| AD  | 1991    |       |    f   |     0-14  ||
