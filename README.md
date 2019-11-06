@@ -55,3 +55,25 @@ Below is part of the tidy data(for the above part of the initial of the initial 
 | AD   | 1990    |       |  m     |    5-14    ||
 | AD  | 1991    |       |    m   |     0-14  ||
 | AD  | 1991    |       |    f   |     0-14  ||
+
+* Variables are stored in both rows and columns <br/>
+
+Below is a section of the table with this issue. ```tmax``` and ```tmin``` are variables which are stored in all rows of the dataset. They need their own columns.
+
+| id  | year | month | element | d1 | d2 |
+| --------- | ----- | ------- | ------- | ------- | ------- |
+| MX17004  | 2010    |  1    |    tmax   |       ||
+| MX17004   | 2010    |   1    |  tmin     |        ||
+| MX17004  | 2010    |  2     |    tmax   |       ||
+| MX17004  | 2010    |   2   |    tmin  |       ||
+
+I start by melting this dataset. The dataset will only have ```id```, ```year```, ```month```, ```element``` and the rest of the column will be converted to ```day``` and ```value```. ```date``` is then extracted from from ```year```, ```month``` and ```day``` which are then dropped as they are now redundant. I finally create ```tmax``` and ```tmin``` columns and get their values from the ```value``` column which is then dropped.
+I repmove duplicates from the dataset and the final tidy dataset looks as below.
+
+| id  | date | tmax | tmin | 
+| --------- | ----- | ------- | ------- |
+| MX17004  | 2010-01-01    |     |       |
+| MX17004   | 2010-01-02    |      |       |
+| MX17004  | 2010-01-03    |      |       | 
+| MX17004  | 2010-01-04    |     |      |  
+
