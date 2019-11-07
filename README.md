@@ -77,3 +77,6 @@ I repmove duplicates from the dataset and the final tidy dataset looks as below.
 | MX17004  | 2010-01-03    |      |       | 
 | MX17004  | 2010-01-04    |     |      |  
 
+
+* Multiple types in one table <br/>
+For this issue, I worked on data in ```data/billboard.csv```. This table has data about ```songs``` and ```billboard rankings```. I separated these types to have two tables i.e ```results/tidy_billboard_songs.csv``` and ```results/tidy_billboatd_rank.csv```. The code for this is in ```tidy_billboard.py```
