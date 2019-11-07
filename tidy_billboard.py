@@ -30,3 +30,7 @@ print("The molten dataset columns", molten_rank_dataset.columns.tolist())
 
 molten_rank_dataset['week'] = molten_rank_dataset.apply(lambda row: extract_week(row), axis=1)
 molten_rank_dataset.sort_values(by=['id', 'date.entered'], inplace=True)
+
+# create files for the tidy datasets
+song_dataset.to_csv('results/tidy_billboard_songs.csv', index=False)
+molten_rank_dataset.to_csv('results/tidy_billboard_rank.csv', index=False)
