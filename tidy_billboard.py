@@ -10,9 +10,15 @@ billboard_df = pd.read_csv('data/billboard.csv')
 # the columns of the data
 print("The columns of the raw data", billboard_df.columns.tolist())
 
-# we start by first melting the dataset
-molten_billboard_df = pd.melt(billboard_df, 
-	id_vars=['year', 'artist.inverted', 'track', 'time', 'genre', 'date.entered', 'date.peaked'], var_name='week', value_name='rank')
-print("the molten dataset columns", molten_billboard_df.columns.tolist())
+# song dataset only has information about the song
+song_dataset = billboard_df[['artist.inverted', 'track', 'time', 'genre']]
 
-molten_billboard_df['week'] = molten_billboard_df.apply(lambda row: extract_week(row), axis=1)
+# rank dataset has the rest of the information
+rank_dataset = billboard_df.drop(['artist.inverted', 'track', 'time', 'genre'], axis=1)
+
+# we start by first melting the dataset
+molten_rank_dataset = pd.melt(rank_dataset, 
+	id_vars=['year', 'date.entered', 'date.peaked'], var_name='week', value_name='rank')
+print("the molten dataset columns", molten_rank_dataset.columns.tolist())
+
+molten_rank_dataset['week'] = molten_rank_dataset.apply(lambda row: extract_week(row), axis=1)
