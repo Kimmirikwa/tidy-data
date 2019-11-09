@@ -5,6 +5,8 @@ def get_sex_and_age(row):
 	sex = sex_and_age[0]
 	age = sex_and_age[1]
 
+	sex = 'male' if sex == 'm' else 'female'
+
 	return pd.Series([sex, age])
 
 students_performance_df = pd.read_csv('data/students_performance.csv')

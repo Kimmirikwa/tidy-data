@@ -1,6 +1,6 @@
 id,name,phone,sex,age
-1,Mike,134,m,12
-2,Linda,270,f,13
-3,Sam,210,m,11
-4,Esther,617,f,12
-5,Mary,114,f,14
+1,Mike,134,male,12
+2,Linda,270,female,13
+3,Sam,210,male,11
+4,Esther,617,female,12
+5,Mary,114,female,14
