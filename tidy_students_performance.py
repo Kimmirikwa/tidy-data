@@ -22,3 +22,8 @@ performance_df = students_performance_df[['id', 'test number', 'term 1', 'term 2
 student_df[['sex', 'age']] = student_df.apply(lambda row: get_sex_and_age(row), axis=1)
 # dropping the 'sex and age' column
 student_df.drop(['sex and age'], axis=1, inplace=True)
+
+# drop duplicates
+student_df.drop_duplicates(['id'], keep='first', inplace=True)
+
+student_df.to_csv('results/students.csv', index=False)
