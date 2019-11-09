@@ -55,8 +55,11 @@ molten_performance_df['term'] = molten_performance_df.apply(lambda row: get_term
 molten_performance_df[['test 1 marks', 'test 2 marks']] = molten_performance_df.apply(
 	lambda row: get_marks_for_tests(molten_performance_df, row), axis=1)
 
-# drop redundant 'marks' column
-molten_performance_df.drop(['marks'], axis=1, inplace=True)
+# drop redundant 'marks' and 'test number' columns
+molten_performance_df.drop(['marks', 'test number'], axis=1, inplace=True)
 
 # drop duplicates
-molten_performance_df.drop_duplicates(['id', 'test number', 'term'], keep='first', inplace=True)
+molten_performance_df.drop_duplicates(['id', 'term'], keep='first', inplace=True)
+
+# sort by id
+molten_performance_df.sort_values(by=['id'], inplace=True)
