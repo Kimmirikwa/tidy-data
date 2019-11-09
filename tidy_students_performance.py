@@ -26,4 +26,4 @@ student_df.drop(['sex and age'], axis=1, inplace=True)
 # drop duplicates
 student_df.drop_duplicates(['id'], keep='first', inplace=True)
 
-student_df.to_csv('results/students.csv', index=False)
+student_df.to_csv('results/tidy_students.csv', index=False)
