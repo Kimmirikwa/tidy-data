@@ -29,3 +29,7 @@ student_df.drop(['sex and age'], axis=1, inplace=True)
 student_df.drop_duplicates(['id'], keep='first', inplace=True)
 
 student_df.to_csv('results/tidy_students.csv', index=False)
+
+# now dealing with the performance data
+# we first melt the data to have 'term 1', 'term 2' and 'term 3' in their own columns
+molten_performance_df = pd.melt(performance_df, id_vars=['id', 'test number'], var_name='term', value_name='marks')
